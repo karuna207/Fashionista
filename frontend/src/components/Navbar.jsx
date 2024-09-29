@@ -6,7 +6,8 @@ import { useState } from 'react'
 const Navbar = () => { 
 
     const [visible, setVisible] = useState(false);
-  return (
+
+    return (
     <div className="flex items-center justify-between py-5 font-medium"> 
         <img src={assets.logo} className="w-36"/> 
         <ul className="hidden sm:flex gap-5 text-sm text-gray-700">  
@@ -56,7 +57,7 @@ const Navbar = () => {
         <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white  transition-all ${visible?'w-full':'w-0'}`}>
             <div className='flex flex-col text-gray-600'>
                 <div onClick={()=>{setVisible(false)}} className="flex item-center gap-4 p-3 cursor-pointer">
-                    <img className='h-4 rotate-180'src={assets.dropdown_icon}></img> 
+                    <img className='h-4 rotate-180' src={assets.dropdown_icon}></img> 
                     <p>Back</p>
                 </div> 
                 <NavLink onClick={()=>{setVisible(false)}}className='py-2 pl-6 border' to='/'>HOME</NavLink>
