@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext"; 
 import { assets } from "../assets/assets";
+import RelatedProducts from "../components/RelatedProducts";
 
 const Product = () => {
   const { productId } = useParams();
   const [size,setsize]=useState('')
-  const { products,currency, } = useContext(ShopContext);
+  const { products,currency,cartitems,setcartitems,AddtoCart} = useContext(ShopContext);
   const [productdata, setproductdata] = useState(false);
   const [Image, setImage] = useState("");
 
@@ -15,7 +16,7 @@ const Product = () => {
       if (item._id === productId) {
         setproductdata(item);
         setImage(item.image[0]);
-        console.log(item);
+        
         return null;
       }
     });
@@ -72,10 +73,35 @@ const Product = () => {
                   })}
               </div>
             </div> 
-            <button className='bg-black px-8 text-white py-3 text-sm active:bg-gray-700'>ADD TO CART</button> 
-            <hr className='mt-8 sm:w-4/5'/>
+            <button className='bg-black px-8 text-white py-3 text-sm active:bg-gray-700' onClick={()=>{ 
+              AddtoCart(productdata._id,size)
+            }}>ADD TO CART</button> 
+            <hr className='mt-8 sm:w-4/5'/> 
+            <div className='text-sm text-gray-500 mt-5 flex flex=col gap-1'>
+              <p>100% original product</p>
+              <p>Cash on delivery is available on this product </p>
+              <p>Easy return and exchange policy within 7 days</p>
+            </div>
         </div> 
-      </div>
+      </div> 
+      <div className='mt-20'> 
+        <div className='flex'>
+          <b className='border px-5 py-3 text-sm '>Description</b>
+          <p className='border px-5 py-3 text-sm '>Reviews(122)</p>
+        </div> 
+
+        <div className='flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500'>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum placeat a, ratione, adipisci eveniet obcaecati odit delectus corrupti officiis quisquam assumenda est veritatis inventore perspiciatis magni quis dicta reiciendis consequatur.</p> 
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium autem, magni obcaecati aut error sunt unde minus, sit animi corporis facere ad perferendis distinctio eaque debitis pariatur asperiores. Maiores, minus!</p>
+        </div>
+
+      </div>  
+
+      <RelatedProducts category={productdata.category} subcategory={productdata.subCategory}>
+
+      </RelatedProducts>
+
+      {/* display related products */} 
     </div>
   ) : (
     <div className="opacity-0"></div>
