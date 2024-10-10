@@ -7,7 +7,7 @@ const ProductItem = (props) => {
 
   return (
     
-        <NavLink className='text-gray-700 cursor-pointer' to={`product/${props.id}`}>  
+        <NavLink className='text-gray-700 cursor-pointer' to={`/product/${props.id}`}>  
 
         <div className='overflow-hidden'> 
             <img className='hover:scale-110 transition ease-in-out' src={props.image[0]}/>
