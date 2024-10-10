@@ -35,11 +35,12 @@ const Footer = () => {
           <p className="py-5 text-sm text-center">Copyright 2024@ forever.com - All Rights reserved</p>
         </div> */} 
 
-        <div className="text-center py-5">           
+       
+
+      </div> 
+      <div className="text-center py-5">           
             <hr className="my-4"/>            
             <p className="text-sm">Copyright 2024@ forever.com - All Rights Reserved</p>         
-        </div>
-
       </div>
     </div>
   );

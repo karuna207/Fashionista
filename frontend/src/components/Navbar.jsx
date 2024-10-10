@@ -38,8 +38,10 @@ const Navbar = () => {
                 setshowSearch(true)
             }}src={assets.search_icon} className="cursor-pointer w-5"/> 
 
-            <div className="group relative">
-                <img src={assets.profile_icon} className="cursor-pointer w-5"></img> 
+            <div className="group relative"> 
+                <NavLink to={"/login"}>
+                <img src={assets.profile_icon} className="cursor-pointer w-5"></img>  
+                </NavLink>
                 <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4"> 
                     <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded"> 
                         <p className="cursor-pointer hover:text-black">My Profile</p>
