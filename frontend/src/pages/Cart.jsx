@@ -4,7 +4,7 @@ import Title from '../components/Title';
 import { assets } from '../assets/assets';
 import CartTotal from '../components/CartTotal';
 const Cart = () => { 
-  const {products,currenncy,cartitems,updateQuantity}=useContext(ShopContext);
+  const {products,currenncy,cartitems,updateQuantity,navigate}=useContext(ShopContext);
   const[cartdata,setcartdata]=useState([]) 
   useEffect(()=>{ 
     const tempData=[] 
@@ -63,7 +63,7 @@ const Cart = () => {
           <div className='w-full sm:w-[450px]'>
             <CartTotal/>  
             <div className='w-full text-end'>
-              <button className='bg-black text-white text-sm my-8 px-8 py-3'>PROCEED TO CHECKOUT</button>
+              <button onClick={()=>{navigate('/place-order')}}className='bg-black text-white text-sm my-8 px-8 py-3'>PROCEED TO CHECKOUT</button>
             </div>
           </div> 
 
