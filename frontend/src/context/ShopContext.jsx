@@ -1,5 +1,6 @@
 import { createContext, useState,useEffect, useCallback } from "react"; 
 import { products } from "../assets/assets";
+import { toast } from "react-toastify";
 
 
 export const ShopContext=createContext();
@@ -13,7 +14,11 @@ const ShopContextProvider=(props)=>{
     const [showSearch, setshowSearch] = useState(false);
     const [cartitems, setcartitems] = useState({}) 
 
-    const  AddtoCart= async (itemId,size)=>{
+    const  AddtoCart= async (itemId,size)=>{ 
+        if(!size){
+            toast.error("Select Product Size") ;
+            return ;
+        }
         let cartdata=structuredClone(cartitems) 
         if(cartdata[itemId]){
             if(cartdata[itemId][size]){
@@ -27,8 +32,52 @@ const ShopContextProvider=(props)=>{
         } 
         setcartitems(cartdata);
         
+    }  
+
+    const getCartCount= ()=>{
+        let totalcount=0;
+        for (const items in cartitems) {
+            for (const item in cartitems[items]) { 
+                try{
+                    if (cartitems[items][item]>0){
+                        totalcount+=cartitems[items][item];
+                    }
+                }
+                catch(err){
+
+                }
+                
+            }
+        }  
+        return totalcount
+        
+}
+
+    const updateQuantity=async(itemId,size,quantity)=>{
+        let cartdata=structuredClone(cartitems);
+        cartdata[itemId][size]=quantity; 
+        setcartitems(cartdata);
     } 
 
+    const getCartAmount=()=>{
+        let totalAmount=0 
+        for (const items in cartitems) {
+            let iteminfo=products.find((product)=>{
+                return product._id===items; 
+            })  
+            console.log(iteminfo);
+            for (const item in cartitems[items]) {
+                try{
+                    if(cartitems[items][item]>0){
+                        totalAmount=totalAmount+cartitems[items][item]*iteminfo.price;
+                    }
+                }catch(err){
+                    console.log(err);
+                }
+            }
+        } 
+        return totalAmount;
+    }
 
 
     useEffect(() => {
@@ -40,7 +89,7 @@ const ShopContextProvider=(props)=>{
 
 
     const value={
-        products,currency,delivery_fee,search,setsearch,showSearch,setshowSearch,cartitems,AddtoCart
+        products,currency,delivery_fee,search,setsearch,showSearch,setshowSearch,cartitems,AddtoCart,getCartCount,updateQuantity,getCartAmount
     }  
 
   
