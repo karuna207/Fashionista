@@ -1,4 +1,6 @@
-import mongoose from "mongoose"; 
+import mongoose from "mongoose";  
+
+//Schema is a structure 
 
 const productSchema=new mongoose.Schema({
     name:{type:String,required:true},
@@ -13,6 +15,12 @@ const productSchema=new mongoose.Schema({
     
     
 }) 
+ 
+// we create model using schema
+//mongoose.model("name",schema) 
+//used for model creation 
+
+
 
 const productModel=mongoose.models.product||mongoose.model("product",productSchema); 
 export default productModel;
