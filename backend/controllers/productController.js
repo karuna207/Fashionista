@@ -76,7 +76,7 @@ const showProducts = async (req, res) => {
   try {
     const products = await productModel.find({});
     console.log(products);
-    res.json({ success: true, products });
+    res.json({ success: true, products});
   } catch (err) {
     console.log(err);
     res.json({ success: false, message: err.message });
