@@ -37,7 +37,16 @@ const ShopContextProvider=(props)=>{
             cartdata[itemId]={}; 
             cartdata[itemId][size]=1;
         } 
-        setcartitems(cartdata);
+        setcartitems(cartdata); 
+
+        if(token){
+            try{ 
+                await axios.post(backendUrl+'/api/cart/add',{itemId,size},{headers:{token}}) 
+            }catch(err){
+                console.log(err)
+                toast.err(err.message);
+            }
+        }
         
     }  
 
@@ -62,9 +71,27 @@ const ShopContextProvider=(props)=>{
 
     const updateQuantity=async(itemId,size,quantity)=>{
         let cartdata=structuredClone(cartitems);
-        cartdata[itemId][size]=quantity; 
-        setcartitems(cartdata);
-    } 
+        cartdata[itemId][size]=quantity;  
+        console.log("quantity",quantity); 
+        console.log('cart data',cartdata);
+        console.log("cart items",cartitems)
+        setcartitems(cartdata);  
+        console.log("after set",cartitems);
+        
+        if(token){
+            try{  
+                console.log(itemId);
+                console.log(size);
+                console.log(quantity);
+                await axios.post(backendUrl+'/api/cart/update',{itemId,size,quantity},{headers:{token}})
+
+            }catch(err){ 
+                console.log(err);
+                toast.error(err.message);
+
+            }
+        }
+   } 
 
     const getCartAmount=()=>{
         let totalAmount=0 
@@ -85,7 +112,22 @@ const ShopContextProvider=(props)=>{
         } 
         return totalAmount;
     }
+ 
 
+    const getUserCart=async(token)=>{ 
+        try{
+            const response=await axios.post(backendUrl+"/api/cart/get",{},{headers:{token}})  
+            if (response.data.success){
+                setcartitems(response.data.cartData);
+
+            }
+        }catch(err){
+            console.log(err.message);
+            toast.error(err.message);
+
+        }
+
+    }
 
     useEffect(() => {
       console.log(cartitems);
@@ -103,7 +145,7 @@ const ShopContextProvider=(props)=>{
             }
         } catch (err) {
             console.log(err);
-            toast.err(err.message);
+            toast.error(err.message);
         }
     };
 
@@ -111,7 +153,15 @@ const ShopContextProvider=(props)=>{
         getProductData();
     
     
-    }, [])
+    }, []) 
+
+    useEffect(()=>{
+        if(!token && localStorage.getItem('token')){
+            settoken(localStorage.getItem('token')); 
+            console.log("refreshed");
+            getUserCart(localStorage.getItem('token'));
+        }
+    },[])
     
 
 
