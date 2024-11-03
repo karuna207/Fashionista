@@ -23,7 +23,7 @@ const Orders = ({ token }) => {
       console.log("hi");
       console.log(response.data);
       if (response.data.success) {
-        setorders(response.data.orders);
+        setorders(response.data.orders.reverse());
       } else {
         toast.error(response.data.message);
       }
