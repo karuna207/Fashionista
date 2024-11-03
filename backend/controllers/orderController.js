@@ -87,11 +87,13 @@ const placeOrderStripe=async (req,res)=>{
         })
 
         const session=await stripe.checkout.sessions.create({
-            success_url:"${origin}/verify?success=true&orderId=${newOrder._id}",
-            cancel_url:"${origin}/verify?success=true&orderId=${newOrder._id}",
+            success_url:`${origin}/verify?success=true&orderId=${newOrder._id}`,
+            cancel_url:`${origin}/verify?success=false&orderId=${newOrder._id}`,
             line_items,
             mode:'payment'
-        }) 
+        })  
+
+        
 
         res.json({
             success:true,
@@ -110,6 +112,40 @@ const placeOrderStripe=async (req,res)=>{
     
     }
 }
+
+// verify stripe payment  
+
+const verifyStripe=async (req,res)=>{
+    const {orderId,success,userId}=req.body; 
+    console.log('outside try-catch'); 
+    console.log(success)
+
+    try{ 
+        if(success=='true'){ 
+            console.log('inside success=true')
+            await orderModel.findByIdAndUpdate(orderId,{payment:true});
+            await userModel.findByIdAndUpdate(userId,{cartData:{}}); 
+            res.json({
+                success:true
+            })
+        }else{
+            await orderModel.findByIdAndDelete(orderId);
+            res.json({
+                success:false
+            })
+        }
+
+    }catch(err){ 
+        console.log(err); 
+        res.json({
+            success:false,
+            message:err.message
+        })
+        toast.error(err.message);
+
+    }
+}
+
 
 
 // Placing orders using Razorpay
@@ -181,4 +217,4 @@ const updateStatus=async(req,res)=>{
     }
 } 
 
-export {placeOrder,placeOrderStripe,placeOrderRazorpay,allOrders,userOrders,updateStatus }
+export {verifyStripe,placeOrder,placeOrderStripe,placeOrderRazorpay,allOrders,userOrders,updateStatus }
