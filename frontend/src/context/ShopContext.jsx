@@ -9,7 +9,7 @@ export const ShopContext=createContext();
 
 const ShopContextProvider=(props)=>{ 
 
-    const currency='$'; 
+    const currency='₹'; 
     const delivery_fee=10;  
     const backendUrl=import.meta.env.VITE_BACKEND_URL; 
     console.log(backendUrl) 
