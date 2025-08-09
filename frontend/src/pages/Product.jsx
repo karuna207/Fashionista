@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext"; 
 import { assets } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
+import FashionChatbot from "../components/FashionChatbot";
+
 
 const Product = () => {
   const { productId } = useParams();
@@ -83,7 +85,12 @@ const Product = () => {
               <p>Easy return and exchange policy within 7 days</p>
             </div>
         </div> 
-      </div> 
+      </div>  
+      <div className='mt-10'>
+        <FashionChatbot />
+      </div>
+ 
+
       <div className='mt-20'> 
         <div className='flex'>
           <b className='border px-5 py-3 text-sm '>Description</b>
