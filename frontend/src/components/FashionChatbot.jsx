@@ -28,7 +28,6 @@ const FashionChatbot = () => {
       // Use axios to make the POST request
       const payload = { contents: [{ role: "user", parts: [{ text: fullPrompt }] }] };
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY; 
-      console.log(apiKey);
       // The API key is provided by the environment
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
@@ -64,7 +63,7 @@ const FashionChatbot = () => {
           }
         `}
       </style>
-      <div className="border border-gray-300 p-6 rounded-xl shadow-lg bg-white w-full w-2xl">
+      <div className="border border-gray-300 p-4 rounded-xl shadow-lg bg-white w-full w-2xl">
         {/* Updated heading with new name, font, and pink handbag icon */}
         <h2 className="text-2xl font-bold mb-4 text-pink-800 flex items-center justify-start">
           <span className="inline-block align-middle mr-2">
@@ -94,7 +93,7 @@ const FashionChatbot = () => {
             </div>
           )}
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-col md:flex-row gap-3">
           <input
             value={input}
             onKeyDown={(e) => { if (e.key === 'Enter') sendMessage(); }}
@@ -107,7 +106,7 @@ const FashionChatbot = () => {
           {/* Updated button color and hover effect */}
           <button
             onClick={sendMessage}
-            className={`bg-pink-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-pink-600 transition-colors ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`bg-pink-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-pink-600 transition-colors w-full md:w-auto ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
             disabled={loading}
           >
             Send
