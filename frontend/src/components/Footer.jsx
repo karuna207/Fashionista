@@ -30,10 +30,7 @@ const Footer = () => {
             <li>fashionista.com</li>
           </ul>
         </div> 
-        {/* <div className='footer'>
-          <hr/> 
-          <p className="py-5 text-sm text-center">Copyright 2024@ forever.com - All Rights reserved</p>
-        </div> */} 
+   
 
        
 
